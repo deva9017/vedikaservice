@@ -55,6 +55,7 @@ sudo echo "172.31.1.232" > /opt/hosts
 sudo echo "172.31.41.54" >> /opt/hosts
 sudo echo "172.31.44.159" >> /opt/hosts
 sudo chmod 777 /opt/hosts
+sudo chmod 777 /etc/ansible
 scp /opt/hosts ssh ubuntu@172.31.13.69:/etc/ansible'''
 }
 
