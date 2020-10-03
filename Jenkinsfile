@@ -6,17 +6,17 @@ node{
 
      stage('gradle Package'){
    def gradleHome = tool name: 'gradle', type: 'gradle'
-   def gradleCMD = "${gradleHome}/bin/gradle"
-   sh "${gradleCMD} clean build -x test" 
+     def gradleCMD = "${gradleHome}/bin/gradle"
+     sh "${gradleCMD} clean build -x test" 
    } 
    
    stage('connecting to anspip server'){
     sh label: '', script: '''ssh ubuntu@172.31.13.69 sudo chmod 777 /opt
-    ssh ubuntu@172.31.1.232 sudo mkdir -p $HOME/.kube'''
+    ssh ubuntu@172.31.41.54 sudo mkdir -p $HOME/.kube'''
 }
    
     stage('connecting to anspip server'){
-   sh label: '', script: '''scp /var/lib/jenkins/workspace/vedikapipeline/build/libs/functionhall-service-0.0.1-SNAPSHOT.war ubuntu@172.31.13.69:/opt'''
+    sh label: '', script: '''scp /var/lib/jenkins/workspace/vedikapipeline/build/libs/functionhall-service-0.0.1-SNAPSHOT.war ubuntu@172.31.13.69:/opt'''
 }
 
     stage('connecting to anspip server'){
@@ -50,7 +50,7 @@ stage('executing ansibleinstallation script'){
 
 stage('executing ansibleinstallation script'){
 sh label: '', script: '''sudo echo "sudo rm -Rf /etc/ansible/hosts
-sudo echo "172.31.1.232" > /opt/hosts
+sudo echo "172.31.41.54" > /opt/hosts
 sudo mv /opt/hosts /etc/ansible" > /opt/docpip.sh
 scp /opt/docpip.sh ubuntu@172.31.13.69:/opt
 ssh ubuntu@172.31.13.69 sh /opt/docpip.sh'''
@@ -302,7 +302,7 @@ stage('kubernetes node yaml'){
 cat >kubernetesnode.yaml <<'EOF'
 ---
 -
-  hosts: 172.31.1.232
+  hosts: 172.31.41.54
   tasks:
     vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -400,7 +400,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config'''
        stage('kubernetes node yaml'){
     sh label: '', script: '''sudo echo "---
 -
-  hosts: 172.31.1.232
+  hosts: 172.31.41.54
   tasks:
     vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -438,7 +438,7 @@ stage('copying kubernetesnode.yaml'){
 
 
   stage('connecting to anspip server'){
-    sh label: '', script: '''scp -r ubuntu@172.31.1.232:/opt/kubeadmtokenedit.sh /opt'''
+    sh label: '', script: '''scp -r ubuntu@172.31.41.54:/opt/kubeadmtokenedit.sh /opt'''
     }    
     
   stage('connecting to anspip server'){
