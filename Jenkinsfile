@@ -51,13 +51,12 @@ stage('executing ansibleinstallation script'){
 
 stage('executing ansibleinstallation script'){
 sh label: '', script: '''ssh ubuntu@172.31.13.69 sudo rm -Rf /etc/ansible/hosts
-sudo echo "sudo echo "172.31.1.232" > /opt/hosts
+sudo echo "172.31.1.232" > /opt/hosts
 sudo echo "172.31.41.54" >> /opt/hosts
-sudo echo "172.31.44.159" >> /opt/hosts" > /opt/host.sh
-scp /opt/host.sh  ubuntu@172.31.13.69:/opt
-ssh ubuntu@172.31.13.69 sh /opt/host.sh'''
+sudo echo "172.31.44.159" >> /opt/hosts
+scp /opt/hosts  ubuntu@172.31.13.69:/opt
+ssh ubuntu@172.31.13.69: mv /opt/hosts /etc/ansible '''
 }
-
 stage('docker installation'){
     sh label: '', script: '''sudo echo "sudo chmod 777 /opt
    #!/bin/bash
