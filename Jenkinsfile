@@ -262,7 +262,7 @@ stage('copying vedika.yaml'){
         dest: /opt/Mydockerfile
     -
        shell: sudo docker login -u deva9017 -p 9700939598dD@
-	-
+    -
       copy:
         src:  /opt/dockerservicepush.sh
         dest: /opt
