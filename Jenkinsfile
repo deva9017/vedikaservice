@@ -12,7 +12,7 @@ node{
    
    stage('connecting to anspip server'){
     sh label: '', script: '''ssh ubuntu@172.31.13.69 sudo chmod 777 /opt
-    ssh ubuntu@172.31.13.69 sudo chmod 777 /opt
+    ssh ubuntu@172.31.41.54 sudo chmod 777 /opt
     ssh ubuntu@172.31.41.54 sudo mkdir -p $HOME/.kube'''
 }
    
@@ -50,27 +50,11 @@ stage('executing ansibleinstallation script'){
   }
 
 stage('executing ansibleinstallation script'){
-sh label: '', script: '''sudo echo "sudo rm -Rf /etc/ansible/hosts
-sudo echo "172.31.41.54" > /opt/hosts
-sudo mv /opt/hosts /etc/ansible" > /opt/docpip.sh
-scp /opt/docpip.sh ubuntu@172.31.13.69:/opt
-ssh ubuntu@172.31.13.69 sh /opt/docpip.sh'''
-}
-
-stage('executing ansibleinstallation script'){
-sh label: '', script: '''sudo echo "sudo mv /etc/ansible/hosts /opt
+sh label: '', script: '''ssh ubuntu@172.31.13.69 sudo rm -Rf /etc/ansible/hosts
+sudo echo "172.31.1.232" > /opt/hosts
 sudo echo "172.31.41.54" >> /opt/hosts
-sudo mv /opt/hosts /etc/ansible" > /opt/kubpip.sh
-scp /opt/kubpip.sh ubuntu@172.31.13.69:/opt
-ssh ubuntu@172.31.13.69 sh /opt/kubpip.sh'''
-}
-
-stage('executing ansibleinstallation script'){
-sh label: '', script: '''sudo echo "sudo mv /etc/ansible/hosts /opt
 sudo echo "172.31.44.159" >> /opt/hosts
-sudo mv /opt/hosts /etc/ansible" > /opt/kubpip.sh
-scp /opt/kubpip.sh ubuntu@172.31.13.69:/opt
-ssh ubuntu@172.31.13.69 sh /opt/kubpip.sh'''
+scp /opt/hosts ssh ubuntu@172.31.13.69:/etc/ansible'''
 }
 
 stage('docker installation'){
@@ -111,8 +95,8 @@ stage('docker hub pushing'){
 cd /opt/Mydockerfile
 sudo docker build -t vedikaservicecicd .
 sudo chmod 666 /var/run/docker.sock
-sudo docker tag vedikaservicecicd shivastunts/vedikaservicecicd
-sudo docker push shivastunts/vedikaservicecicd" > /opt/dockerservicepush.sh'''
+sudo docker tag vedikaservicecicd deva9017/vedikaservicecicd
+sudo docker push deva9017/vedikaservicecicd" > /opt/dockerservicepush.sh'''
 }
 
 stage('copying dockerservicepush.sh'){
@@ -237,7 +221,7 @@ stage('copying vedika.yaml'){
     stage('dockernode yaml'){
     sh label: '', script: '''sudo echo "---
 -
-  hosts: 172.31.41.54
+  hosts: 172.31.1.232
   tasks:
     vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -372,13 +356,10 @@ stage('kubernetes node yaml'){
     sh label: '', script: '''cd /opt
     cat >kubefannels.sh <<'EOF'
    #!/bin/bash
-    sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
     sudo kubectl apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml
     sudo kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-    sudo chmod 755 /opt/cni/bin/calico
-    sudo curl -L -o /opt/cni/bin/calico-ipam https://github.com/projectcalico/cni-plugin/releases/download/v3.14.0/calico-ipam-amd64
-    sudo chmod 755 /opt/cni/bin/calico-ipam
-    sudo curl -L -o /opt/cni/bin/calico https://github.com/projectcalico/cni-plugin/releases/download/v3.14.0/calico-amd64'''
+    sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+    sudo kubectl create -f /opt/vedika.yaml'''
     }
     
     stage('copying kubernetesnode.yaml'){
@@ -439,7 +420,7 @@ stage('copying kubernetesnode.yaml'){
 
 
   stage('connecting to anspip server'){
-    sh label: '', script: '''scp -r ubuntu@172.31.41.54:/opt/kubeadmtokenedit.sh /opt'''
+    sh label: '', script: '''scp -r ubuntu@172.31.1.232:/opt/kubeadmtokenedit.sh /opt'''
     }    
     
   stage('connecting to anspip server'){
@@ -471,10 +452,6 @@ try {
 
 stage('webhooks testing'){
     sh label: '', script: '''sudo apt-get update'''
-}
-
-stage('email notification'){
-emailext attachLog: true, body: '', replyTo: 'shivastunts@gmail.com', subject: 'vedikapipeline', to: 'shivastunts@gmail.com'
 }
 
 }
