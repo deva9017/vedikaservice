@@ -147,14 +147,15 @@ stage('dockeruipush.sh'){
 stage('kubernetes installating'){
     sh label: '', script: '''sudo echo "sudo apt update
 sudo apt upgrade
-sudo apt-get install curl apt-transport-https ca-certificates software-properties-common
+sudo apt-get install curl 
+sudo apt-get install apt-transport-https 
+sudo apt-get install ca-certificates 
+sudo apt-get install software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt update -y
 apt-cache policy docker-ce
 sudo apt install docker-ce
-systemctl start docker
-systemctl enable docker
 echo Download the latest release with the command:
 sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 echo To install k8 version v1.18.0 on Linux, type:
