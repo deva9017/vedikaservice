@@ -244,7 +244,7 @@ stage('copying vedika.yaml'){
   tasks:  
     - debug: var=ansible_host
    
-    -
+    -           
        shell: sudo chmod 777 /opt
     -
       copy:
