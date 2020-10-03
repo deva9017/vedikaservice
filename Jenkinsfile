@@ -244,7 +244,7 @@ stage('copying vedika.yaml'){
   tasks:  
     - debug: var=ansible_host
    
-    -           
+    -
        shell: sudo chmod 777 /opt
     -
       copy:
@@ -261,8 +261,8 @@ stage('copying vedika.yaml'){
         src:  /opt/Dockerfile
         dest: /opt/Mydockerfile
     -
-      shell: sudo docker login -u deva9017 -p 9700939598dD@
-    -
+       shell: sudo docker login -u deva9017 -p 9700939598dD@
+	-
       copy:
         src:  /opt/dockerservicepush.sh
         dest: /opt
