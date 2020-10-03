@@ -5,9 +5,9 @@ node{
    
 
      stage('gradle Package'){
-   // def gradleHome = tool name: 'gradle', type: 'gradle'
-   //  def gradleCMD = "${gradleHome}/bin/gradle"
-   //  sh "${gradleCMD} clean build -x test" 
+   def gradleHome = tool name: 'gradle', type: 'gradle'
+   def gradleCMD = "${gradleHome}/bin/gradle"
+   sh "${gradleCMD} clean build -x test" 
    } 
    
    stage('connecting to anspip server'){
@@ -16,7 +16,7 @@ node{
 }
    
     stage('connecting to anspip server'){
-   // sh label: '', script: '''scp /var/lib/jenkins/workspace/vedikapipeline/build/libs/functionhall-service-0.0.1-SNAPSHOT.war ubuntu@172.31.13.69:/opt'''
+   sh label: '', script: '''scp /var/lib/jenkins/workspace/vedikapipeline/build/libs/functionhall-service-0.0.1-SNAPSHOT.war ubuntu@172.31.13.69:/opt'''
 }
 
     stage('connecting to anspip server'){
