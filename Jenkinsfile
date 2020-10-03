@@ -12,6 +12,7 @@ node{
    
    stage('connecting to anspip server'){
     sh label: '', script: '''ssh ubuntu@172.31.13.69 sudo chmod 777 /opt
+    ssh ubuntu@172.31.13.69 sudo chmod 777 /opt
     ssh ubuntu@172.31.41.54 sudo mkdir -p $HOME/.kube'''
 }
    
@@ -260,8 +261,8 @@ stage('copying vedika.yaml'){
         src:  /opt/Dockerfile
         dest: /opt/Mydockerfile
     -
-       shell: sudo docker login -u deva9017 -p 9700939598dD@
-	-
+      shell: sudo docker login -u deva9017 -p 9700939598dD@
+    -
       copy:
         src:  /opt/dockerservicepush.sh
         dest: /opt
