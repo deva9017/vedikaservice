@@ -456,8 +456,4 @@ try {
 }
 }
 
-stage('webhooks testing'){
-    sh label: '', script: '''sudo apt-get update'''
-}
-
 }
